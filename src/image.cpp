@@ -71,9 +71,7 @@ bool Image::saveImage(const string& filepath) const {
     std::filesystem::path directory = filePathObj.parent_path();
 
     if (!directory.empty() && !std::filesystem::exists(directory)) {
-        cout << "Folder tidak ditemukan. Membuat folder: " << directory << endl;
         if (!std::filesystem::create_directories(directory)) {
-            cerr << "Error: Gagal membuat direktori " << directory << endl;
             return false;
         }
     }

@@ -11,6 +11,7 @@ int main() {
     int errorMeasurementMethod; // Metode kompresi yang dipilih
     int threshold; // Ambang batas untuk kompresi
     int minimumBlockSize;
+    bool isSaved; // Menyimpan status penyimpanan gambar
 
     cout << "Masukkan alamat gambar: ";
     getline(cin, inputAddress);
@@ -69,7 +70,11 @@ int main() {
     }
 
     img.setPixelMatrix(compressedMatrix);
-    img.saveImage(outputAddress);
+    if (img.saveImage(outputAddress)) {
+        isSaved = true;
+    } else {
+        isSaved = false;
+    }
     
     auto endTime = chrono::high_resolution_clock::now();
     chrono::duration<double> executionTime = endTime - startTime;
@@ -85,7 +90,11 @@ int main() {
     cout << "Persentase kompresi: " << compressionPercentage << "%" << endl;
     cout << "Kedalaman pohon: " << qt.getMaxDepth() << endl;
     cout << "Banyak simpul pada pohon: " << qt.getNodeCount() << endl;
-    cout << "Gambar berhasil dikompresi dan disimpan di " << outputAddress << endl;
+    if (isSaved) {
+        cout << "Gambar berhasil dikompresi dan disimpan di " << outputAddress << endl;
+    } else {
+        cout << "Gambar gagal disimpan " << endl;
+    }
     cout << "============================" << endl;
 
     return 0;
