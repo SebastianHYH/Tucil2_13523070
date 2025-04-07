@@ -38,14 +38,13 @@ Quadtree::Node* Quadtree::compressBlock(
     int minBlockSize
 ) {
     if (width == 1 && height == 1) {
-        return new Node(x, y, width, false, vector<int>{0, 0, 0});  // Store RGB values
+        return new Node(x, y, width, false, vector<int>{0, 0, 0});
     }
 
-    // Extract block data
     vector<vector<vector<int>>> block(height, vector<vector<int>>(width, vector<int>(3)));
     for (int i = 0; i < height; i++)
         for (int j = 0; j < width; j++)
-            block[i][j] = image[x + i][y + j];  // Copy RGB values
+            block[i][j] = image[x + i][y + j]; //nilai RGB
 
     double error = 0;
 
@@ -64,7 +63,6 @@ Quadtree::Node* Quadtree::compressBlock(
             break;
     }
 
-    // If error is low OR block is too small, store average color
     if (error <= threshold || width <= minBlockSize || height <= minBlockSize) {
         vector<int> avgColor(3, 0);
         for (const auto& row : block)
@@ -78,7 +76,6 @@ Quadtree::Node* Quadtree::compressBlock(
         return new Node(x, y, width, true, avgColor);
     }
 
-    // Determine new split sizes
     int newWidth = width / 2;
     int newHeight = height / 2;
     
@@ -97,8 +94,7 @@ Quadtree::Node* Quadtree::compressBlock(
     } 
     
     Node* node = new Node(x, y, width, false, avgColor);
-    
-    // Correctly split children based on width & height
+
     node->children[0] = compressBlock(image, x, y, newWidth, newHeight, minBlockSize); 
     node->children[1] = (width > newWidth) ? compressBlock(image, x, y + newWidth, width - newWidth, newHeight, minBlockSize) : nullptr;
     node->children[2] = (height > newHeight) ? compressBlock(image, x + newHeight, y, newWidth, height - newHeight, minBlockSize) : nullptr;
@@ -133,13 +129,12 @@ void Quadtree::reconstructImage(Node* root, vector<vector<vector<int>>>& image, 
     q.push(root);
 
     while (!q.empty()) {
-        int levelSize = q.size();  // Process all nodes at the current level
+        int levelSize = q.size();
         for (int i = 0; i < levelSize; i++) {
             Node* node = q.front();
             q.pop();
 
             if (node->isLeaf) {
-                // Fill the region with the node's color
                 for (int i = 0; i < node->size; i++) {
                     for (int j = 0; j < node->size; j++) {
                         int px = node->x + i;

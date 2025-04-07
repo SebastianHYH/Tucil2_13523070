@@ -19,7 +19,7 @@ Image::~Image() {
 long long Image::getFileSize(const string& filePath) const {
     ifstream file(filePath, ios::binary | ios::ate);
     if (!file.is_open()) {
-        cerr << "Error: Could not open file " << filePath << endl;
+        cerr << "Error: File gagal dibuka: " << filePath << endl;
         return -1;
     }
     return file.tellg();
@@ -28,7 +28,7 @@ long long Image::getFileSize(const string& filePath) const {
 bool Image::loadImage(const string& filepath) {
     unsigned char* data = stbi_load(filepath.c_str(), &width, &height, &channels, 3);
     if (!data) {
-        cerr << "Error: Failed to load image: " << filepath << endl;
+        cerr << "Error: Gambar gagal di-load: " << filepath << endl;
         return false;
     }
 
@@ -63,8 +63,19 @@ bool Image::loadImage(const string& filepath) {
 
 bool Image::saveImage(const string& filepath) const {
     if (pixels.empty()) {
-        cerr << "Error: No image data to save!" << endl;
+        cerr << "Error: Data gambar tidak ada" << endl;
         return false;
+    }
+
+    std::filesystem::path filePathObj(filepath);
+    std::filesystem::path directory = filePathObj.parent_path();
+
+    if (!directory.empty() && !std::filesystem::exists(directory)) {
+        cout << "Folder tidak ditemukan. Membuat folder: " << directory << endl;
+        if (!std::filesystem::create_directories(directory)) {
+            cerr << "Error: Gagal membuat direktori " << directory << endl;
+            return false;
+        }
     }
 
     int outWidth = width, outHeight = height;
@@ -89,15 +100,8 @@ bool Image::saveImage(const string& filepath) const {
     }
 
     if (!stbi_write_png(filepath.c_str(), outWidth, outHeight, channels, outputPixels.data(), outWidth * channels)) {
-        cerr << "Error: Failed to save image: " << filepath << endl;
-        // if (!filesystem::exists(filepath.c_str())) { // Membuat direktori baru jika tidak ada
-        //     cout << "Direktori tidak ada. Membuat direktori.." << endl;
-        //     filesystem::create_directories(filepath.c_str());
-        //     stbi_write_png(filepath.c_str(), outWidth, outHeight, channels, outputPixels.data(), outWidth * channels);
-        // } else {
-        //     cerr << "Error: Failed to save image: " << filepath << endl;
-        //     return false;
-        // }
+        cerr << "Error: Gagal menyimpan gambar " << filepath << endl;
+        return false;
     }
 
     return true;
