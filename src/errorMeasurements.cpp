@@ -65,7 +65,7 @@ double ErrorMeasurementMethod::computeMAD(const vector<vector<vector<int>>>& blo
     return (MADR + MADG + MADB) / 3.0;
 }
 
-int ErrorMeasurementMethod::computeMaxPixelDiff(const vector<vector<vector<int>>>& block) {
+double ErrorMeasurementMethod::computeMaxPixelDiff(const vector<vector<vector<int>>>& block) {
     double maxR = 0.0, maxG = 0.0, maxB = 0.0, minR = 255.0, minG = 255.0, minB = 255.0;
     int totalPixels = block.size() * block[0].size();
 
