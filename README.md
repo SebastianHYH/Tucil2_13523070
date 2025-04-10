@@ -22,3 +22,5 @@ Program ini mampu melakukan kompresi gambar dengan sistem quadtree sesuai dengan
 4. Jalankan program dengan
     ```sh
     ./imageCompression.exe
+## Identitas Pembuat
+Sebastian Hung Yansen - 13523070
