@@ -21,23 +21,48 @@ int main() {
         return 1;
     }
 
-    cout << "1. Variance" << endl;
-    cout << "2. Mean Absolute Deviation (MAD)" << endl;
-    cout << "3. Max Pixel Difference" << endl;
-    cout << "4. Entropy" << endl;
-    cout << "Pilih metode pengukuran error: ";
-    cin >> errorMeasurementMethod;
+    do {
+        cout << "Pilih metode pengukuran error:" << endl;
+        cout << "1. Variance" << endl;
+        cout << "2. Mean Absolute Deviation (MAD)" << endl;
+        cout << "3. Max Pixel Difference" << endl;
+        cout << "4. Entropy" << endl;
+        cout << "Masukkan pilihan (1-4): ";
+        cin >> errorMeasurementMethod;
+    
+        if (cin.fail() || errorMeasurementMethod < 1 || errorMeasurementMethod > 4) {
+            cout << "Input tidak valid. Masukkan angka antara 1 dan 4." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    } while (errorMeasurementMethod < 1 || errorMeasurementMethod > 4);
 
-    if (errorMeasurementMethod < 1 || errorMeasurementMethod > 4) {
-        cout << "Metode tidak valid" << endl;
+    do {
+        cout << "Masukkan ambang batas (threshold, angka positif): ";
+        cin >> threshold;
+    
+        if (cin.fail() || threshold <= 0) {
+            cout << "Input tidak valid. Masukkan angka positif." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    } while (threshold <= 0);
+
+    do {
+        cout << "Masukkan ukuran minimum blok (angka positif): ";
+        cin >> minimumBlockSize;
+    
+        if (cin.fail() || minimumBlockSize <= 0) {
+            cout << "Input tidak valid. Masukkan angka positif." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    } while (minimumBlockSize <= 0);
+
+    if (minimumBlockSize < 1) {
+        cout << "Ukuran minimum blok tidak valid" << endl;
         return 1;
     }
-
-    cout << "Masukkan ambang batas: ";
-    cin >> threshold;
-
-    cout << "Masukkan ukuran minimum blok: ";
-    cin >> minimumBlockSize;
     
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     cout << "Masukkan alamat gambar hasil kompresi: ";
