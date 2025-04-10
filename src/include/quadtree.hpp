@@ -39,7 +39,6 @@ class Quadtree {
         ErrorMethod method;
     
         Node* compressBlock(const std::vector<std::vector<std::vector<int>>>& image, int x, int y, int width, int height, int minBlockSize);
-        // GIF STUFF
         void reconstructImage(Node* node, std::vector<std::vector<std::vector<int>>>& image, int& frameNumber, Image& img, int depth, int maxDepth);
 
         int getNodeCount(Node* node) const;
