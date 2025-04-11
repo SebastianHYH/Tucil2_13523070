@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 #include <chrono>
-#include "include\quadtree.hpp"
-#include "include\errorMeasurements.hpp"
+#include "include/quadtree.hpp"
+#include "include/errorMeasurements.hpp"
 using namespace std;
 
 int main() {
