@@ -15,7 +15,7 @@ Program ini mampu melakukan kompresi gambar dengan sistem quadtree sesuai dengan
    ..\src\
 3. Compile program dengan
    ```sh
-   g++ -o ../bin/imageCompression main.cpp image.cpp Quadtree.cpp errorMeasurements.cpp
+   g++ -o ../bin/imageCompression main.cpp image.cpp quadtree.cpp errorMeasurements.cpp
    ```
    Program akan dicompile dan diletakkan di folder bin
 
